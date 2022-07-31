@@ -1,7 +1,7 @@
-service: my-first-app-rs-app
+service: second-rs-app
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   lambdaHashingVersion: 20201221
 
 
@@ -11,7 +11,7 @@ plugins:
 
 custom:
   client:
-    bucketName: front-part
+    bucketName: front-aws-rs
     distributionFolder: build
     indexDocument: index.html
     manageResources: false
@@ -95,8 +95,10 @@ resources:
 
 
   ## In order to print out the hosted domain via `serverless info` we need to define the DomainName output for CloudFormation
-    Outputs:
+  Outputs:
     WebAppS3BucketOutput:
-      Value: !Ref WebAppS3Bucket
+      Value:
+        'Ref': WebAppS3Bucket
     WebAppCloudFrontDistributionOutput:
-      Value: !GetAtt WebAppCloudFrontDistribution.DomainName
+      Value:
+        'Fn::GetAtt': [ WebAppCloudFrontDistribution, DomainName ]
